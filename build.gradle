@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+}
+
+group 'com.ljy.learn'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'io.netty', name: 'netty-all', version: '4.1.34.Final'
+    compile fileTree(dir:'lib',includes:['*jar'])
+}
+
+def mainClassName = "com.ljy.iot.EchoServer"
+jar {
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="taos-jdbcdriver-1.0.1-dist">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/taos-jdbcdriver-1.0.1-dist.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
