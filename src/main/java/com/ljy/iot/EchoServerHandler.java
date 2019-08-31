@@ -114,7 +114,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
             }
         }
 
-        if(strings != null){
+        if(strings != null){ 
             for(String s: strings){
                 System.out.println(s);
             }

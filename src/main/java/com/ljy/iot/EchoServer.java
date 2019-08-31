@@ -8,7 +8,6 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 
 import java.net.InetSocketAddress;
 
@@ -24,12 +23,6 @@ public class EchoServer {
         this.port = port;
     }
     public static void main(String[] args) throws Exception {
-//        if (args.length != 1) {
-//            System.err.println(
-//                    "Usage: " + EchoServer.class.getSimpleName() +
-//                            " <port>");
-//            return;
-//        }
         int port = Integer.parseInt("5016");        //1 设置端口值（抛出一个 NumberFormatException 如果该端口参数的格式不正确）
         new EchoServer(port).start();                //2 呼叫服务器的 start() 方法
     }
