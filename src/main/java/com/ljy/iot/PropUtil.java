@@ -15,7 +15,8 @@ public class PropUtil {
     public static void main(String[] args) {
         Properties prop = new Properties();
         try{
-            InputStream in = new BufferedInputStream (new FileInputStream("F:\\java-IDEA\\Java-code\\iot\\src\\main\\resources\\application.properties"));
+//            InputStream in = new BufferedInputStream (new FileInputStream("application.properties"));
+            InputStream in = new BufferedInputStream (new FileInputStream("src\\main\\resources\\application.properties"));
             prop.load(in);     ///加载属性列表
             Iterator<String> it=prop.stringPropertyNames().iterator();
             while(it.hasNext()){
