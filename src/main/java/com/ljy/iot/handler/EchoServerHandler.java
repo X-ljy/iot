@@ -1,10 +1,17 @@
-package com.ljy.iot;
+package com.ljy.iot.handler;
 
+import com.ljy.iot.entity.Entity5015;
+import com.ljy.iot.entity.Entity5016;
+import com.ljy.iot.util.DataUtil;
+import com.ljy.iot.util.DataUtil2;
+import com.ljy.iot.util.TSDButil;
+import com.sun.javafx.logging.Logger;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -16,14 +23,15 @@ import java.math.BigInteger;
 @ChannelHandler.Sharable                                        //1 @Sharable 标识这类的实例之间可以在 channel 里面共享
 public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
+
     @Override
     public void channelRead(ChannelHandlerContext ctx,
                             Object msg) throws UnsupportedEncodingException {
 
+
         System.out.println("--------------------------------");
         ByteBuf in = (ByteBuf) msg;
         System.out.println("服务端接收数据: " + in.toString());
-        System.out.println(in.readableBytes());
         int flag = 0;
         byte[] bytes = new byte[in.capacity()];
         for (int i = 0; i < in.capacity(); i++) {
@@ -60,7 +68,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
                     System.out.println("时间戳：" + timeStamp);
                 }
             }
-            strings[0] = DataUtil.getTimeStamp(timeStamp);
+            strings[0] = DataUtil2.getTimeStamp(timeStamp);
 
             //设备标识符
             byte[] id = new byte[11];
@@ -107,7 +115,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
                     System.out.println("数据：" +  device_Data);
                     x_flag = 0;
 
-                    device_Data = DataUtil.compareAndSwap(data_flag,device_Data);
+                    device_Data = DataUtil2.compareAndSwap(data_flag,device_Data);
                     strings[data_flag] = device_Data;
                     data_flag++;
                 }
@@ -118,15 +126,15 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
             for(String s: strings){
                 System.out.println(s);
             }
-            TSDButil tsdButil = new TSDButil();
-            Entity5016 entity5016 = new Entity5016(strings[0],strings[1],strings[2],strings[3],strings[4],strings[5],strings[6],
+            Entity5015 entity5015 = new Entity5015(strings[0],strings[1],strings[2],strings[3],strings[4],strings[5],strings[6],
                     strings[7],strings[8],strings[9],strings[10],strings[11],strings[12],strings[13],strings[14],strings[15],
                     strings[16],strings[17],strings[18],strings[19],strings[20],strings[21],strings[22],strings[23],strings[24],
                     strings[25],strings[26],strings[27],strings[28],strings[29],strings[30],strings[31],strings[32],strings[33],
                     strings[34],strings[35],strings[36],strings[37],strings[38],strings[39],strings[40],strings[41],strings[42],
                     strings[43],strings[44],strings[45],strings[46],strings[47],strings[48],strings[49],strings[50],strings[51]);
-            tsdButil.doMakeJdbcUrl();
-            tsdButil.doExecuteInsert(entity5016.toSqlString());
+
+//            tsdButil.doMakeJdbcUrl();
+            TSDButil.doExecuteInsert(entity5015.toSqlString());
 
         }
         System.out.println("--------------------------------");
@@ -136,15 +144,15 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
         //构建返回消息
 //        System.out.println("返回应答消息: ");
 
-        //5016
-        byte[] bytes1 = new byte[]{(byte) 0x7B, (byte) 0x81, (byte) 0x00 ,(byte) 0x10,
-                (byte) 0x34, (byte) 0x30, (byte) 0x33, (byte) 0x32, (byte) 0x36, (byte) 0x39, (byte) 0x30, (byte) 0x34, (byte) 0x39, (byte) 0x36, (byte) 0x34,
-                (byte) 0x7B};
-
-        //5015
+//        //5016
 //        byte[] bytes1 = new byte[]{(byte) 0x7B, (byte) 0x81, (byte) 0x00 ,(byte) 0x10,
-//                (byte) 0x34, (byte) 0x30, (byte) 0x33, (byte) 0x37, (byte) 0x38, (byte) 0x35, (byte) 0x31, (byte) 0x30, (byte) 0x30, (byte) 0x35, (byte) 0x34,
+//                (byte) 0x34, (byte) 0x30, (byte) 0x33, (byte) 0x32, (byte) 0x36, (byte) 0x39, (byte) 0x30, (byte) 0x34, (byte) 0x39, (byte) 0x36, (byte) 0x34,
 //                (byte) 0x7B};
+
+//        5015
+        byte[] bytes1 = new byte[]{(byte) 0x7B, (byte) 0x81, (byte) 0x00 ,(byte) 0x10,
+                (byte) 0x34, (byte) 0x30, (byte) 0x33, (byte) 0x37, (byte) 0x38, (byte) 0x35, (byte) 0x31, (byte) 0x30, (byte) 0x30, (byte) 0x35, (byte) 0x34,
+                (byte) 0x7B};
         ByteBuf out =  Unpooled.buffer(128);
         System.out.println();
         out.writeBytes(bytes1);

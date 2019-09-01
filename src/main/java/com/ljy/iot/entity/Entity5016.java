@@ -1,4 +1,4 @@
-package com.ljy.iot;
+package com.ljy.iot.entity;
 
 /**
  * @author : 夕
@@ -9,10 +9,6 @@ public class Entity5016 {
     private String ts;
     private String id;
     private String address;
-
-    //tags
-    private String equipment_type;
-    private String identification_id;
 
     private float ambient_temperature ;
     private float temperature1 ;
@@ -219,21 +215,7 @@ public class Entity5016 {
         this.address = address;
     }
 
-    public String getEquipment_type() {
-        return equipment_type;
-    }
 
-    public void setEquipment_type(String equipment_type) {
-        this.equipment_type = equipment_type;
-    }
-
-    public String getIdentification_id() {
-        return identification_id;
-    }
-
-    public void setIdentification_id(String identification_id) {
-        this.identification_id = identification_id;
-    }
 
     public float getAmbient_temperature() {
         return ambient_temperature;

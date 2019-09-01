@@ -1,4 +1,4 @@
-package com.ljy.iot;
+package com.ljy.iot.util;
 
 import java.math.BigInteger;
 import java.text.ParseException;
@@ -63,6 +63,7 @@ public class DataUtil {
         }
         return data;
     }
+
 
 
 }

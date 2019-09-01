@@ -1,5 +1,7 @@
-package com.ljy.iot;
+package com.ljy.iot.server;
 
+import com.ljy.iot.handler.EchoServerHandler;
+import com.ljy.iot.decoder.MyDelimiterBasedFrameDecoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -21,10 +23,6 @@ public class EchoServer {
 
     public EchoServer(int port) {
         this.port = port;
-    }
-    public static void main(String[] args) throws Exception {
-        int port = Integer.parseInt("5016");        //1 设置端口值（抛出一个 NumberFormatException 如果该端口参数的格式不正确）
-        new EchoServer(port).start();                //2 呼叫服务器的 start() 方法
     }
 
     public void start() throws Exception {
