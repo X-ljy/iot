@@ -17,7 +17,7 @@
     <!-- 日志最大的历史 30天 -->
     <property name="log.maxHistory" value="30"/>
     <property name="log.level" value="debug"/>
-    <property name="log.maxSize" value="5MB" />
+    <property name="log.maxSize" value="20MB" />
 
     <!-- ConsoleAppender 控制台输出日志 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -33,7 +33,7 @@
     <!-- 滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件 RollingFileAppender -->
     <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 过滤器，只记录WARN级别的日志 -->
-        <!-- 果日志级别等于配置级别，过滤器会根据onMath 和 onMismatch接收或拒绝日志。 -->
+        <!-- 如果日志级别等于配置级别，过滤器会根据onMath 和 onMismatch接收或拒绝日志。 -->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <!-- 设置过滤级别 -->
             <level>ERROR</level>
@@ -142,27 +142,25 @@
     </appender>
 
 
-    <!--设置一个向上传递的appender,所有级别的日志都会输出-->
-    <appender name="app" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${log.home_dir}/app/%d{yyyy-MM-dd}/${log.app_name}-%i.log</fileNamePattern>
-            <maxHistory>${log.maxHistory}</maxHistory>
-            <MaxFileSize>${log.maxSize}</MaxFileSize>
-        </rollingPolicy>
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %logger - %msg%n</pattern>
-        </encoder>
-    </appender>
+    <!--&lt;!&ndash;设置一个向上传递的appender,所有级别的日志都会输出&ndash;&gt;-->
+    <!--<appender name="app" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">-->
+            <!--<fileNamePattern>${log.home_dir}/app/%d{yyyy-MM-dd}/${log.app_name}-%i.log</fileNamePattern>-->
+            <!--<maxHistory>${log.maxHistory}</maxHistory>-->
+            <!--<MaxFileSize>${log.maxSize}</MaxFileSize>-->
+        <!--</rollingPolicy>-->
+        <!--<encoder>-->
+            <!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %logger - %msg%n</pattern>-->
+        <!--</encoder>-->
+    <!--</appender>-->
 
-
-
-    <!--com.ljy.iot包下的类的日志输出-->
-    <logger name="com.ljy.iot" additivity="false" level="DEBUG" >
-        <appender-ref ref="app" />
-        <appender-ref ref="ERROR" />
-        <!--打印控制台-->
-        <appender-ref ref="CONSOLE" />
-    </logger>
+    <!--&lt;!&ndash;com.ljy.iot包下的类的日志输出&ndash;&gt;-->
+    <!--<logger name="com.ljy.iot" additivity="false" level="DEBUG" >-->
+        <!--<appender-ref ref="app" />-->
+        <!--<appender-ref ref="ERROR" />-->
+        <!--&lt;!&ndash;打印控制台&ndash;&gt;-->
+        <!--<appender-ref ref="CONSOLE" />-->
+    <!--</logger>-->
 
     <!-- root级别   DEBUG -->
     <root>
