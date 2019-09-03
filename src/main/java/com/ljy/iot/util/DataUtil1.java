@@ -9,7 +9,7 @@ import java.util.Date;
  * @author : 夕
  * @date : 2019/8/30
  */
-public class DataUtil {
+public class DataUtil1 {
 
     public static String getTimeStamp(String s){
         String a = s.substring(0,2);

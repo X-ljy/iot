@@ -1,7 +1,7 @@
 package com.ljy.iot.handler;
 
 import com.ljy.iot.entity.Entity5015;
-import com.ljy.iot.util.DataUtil2;
+import com.ljy.iot.util.DataUtil1;
 import com.ljy.iot.util.TSDButil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -50,7 +50,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
                     logger.info("时间戳：" + timeStamp);
                 }
             }
-            strings[0] = DataUtil2.getTimeStamp(timeStamp);
+            strings[0] = DataUtil1.getTimeStamp(timeStamp);
 
             //设备标识符
             byte[] id = new byte[11];
@@ -91,7 +91,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
                 if(x_flag > 3){
                     device_Data = new String(data ,"ascii");
                     x_flag = 0;
-                    device_Data = DataUtil2.compareAndSwap(data_flag,device_Data);
+                    device_Data = DataUtil1.compareAndSwap(data_flag,device_Data);
                     logger.info("设备记录数据：" + device_Data);
                     strings[data_flag] = device_Data;
                     data_flag++;
@@ -127,14 +127,14 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
         //构建返回消息
 
 //        //5016
-//        byte[] bytes1 = new byte[]{(byte) 0x7B, (byte) 0x81, (byte) 0x00 ,(byte) 0x10,
-//                (byte) 0x34, (byte) 0x30, (byte) 0x33, (byte) 0x32, (byte) 0x36, (byte) 0x39, (byte) 0x30, (byte) 0x34, (byte) 0x39, (byte) 0x36, (byte) 0x34,
-//                (byte) 0x7B};
+        byte[] bytes1 = new byte[]{(byte) 0x7B, (byte) 0x81, (byte) 0x00 ,(byte) 0x10,
+                (byte) 0x34, (byte) 0x30, (byte) 0x33, (byte) 0x32, (byte) 0x36, (byte) 0x39, (byte) 0x30, (byte) 0x34, (byte) 0x39, (byte) 0x36, (byte) 0x34,
+                (byte) 0x7B};
 
 //        5015
-        byte[] bytes1 = new byte[]{(byte) 0x7B, (byte) 0x81, (byte) 0x00 ,(byte) 0x10,
-                (byte) 0x34, (byte) 0x30, (byte) 0x33, (byte) 0x37, (byte) 0x38, (byte) 0x35, (byte) 0x31, (byte) 0x30, (byte) 0x30, (byte) 0x35, (byte) 0x34,
-                (byte) 0x7B};
+//        byte[] bytes1 = new byte[]{(byte) 0x7B, (byte) 0x81, (byte) 0x00 ,(byte) 0x10,
+//                (byte) 0x34, (byte) 0x30, (byte) 0x33, (byte) 0x37, (byte) 0x38, (byte) 0x35, (byte) 0x31, (byte) 0x30, (byte) 0x30, (byte) 0x35, (byte) 0x34,
+//                (byte) 0x7B};
         ByteBuf out =  Unpooled.buffer(128);
         out.writeBytes(bytes1);
         ctx.writeAndFlush(out);                            //3 将所接收的消息返回给发送者。
