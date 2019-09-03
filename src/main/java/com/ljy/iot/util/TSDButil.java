@@ -2,6 +2,8 @@ package com.ljy.iot.util;
 
 
 import com.ljy.iot.config.TSDBconfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 
@@ -10,6 +12,8 @@ import java.sql.*;
  * @date : 2019/8/29
  */
 public class TSDButil {
+
+    private static Logger logger = LoggerFactory.getLogger(TSDButil.class);
 
     private static final String TSDB_DRIVER = "com.taosdata.jdbc.TSDBDriver";
 
@@ -28,7 +32,7 @@ public class TSDButil {
             String jdbcUrl = tsdBconfig.getJdbcUrl();
             conn = DriverManager.getConnection(jdbcUrl);
             Statement stmt = conn.createStatement();
-            System.out.println("sql: \n" + sql);
+            logger.info("sql: \n" + sql);
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
