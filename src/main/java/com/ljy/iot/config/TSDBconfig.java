@@ -22,10 +22,11 @@ public class TSDBconfig {
 
     private static String jdbcUrl;
 
-    public  String getJdbcUrl() {
+    public static String getJdbcUrl() {
         Properties prop = new Properties();
         try{
-            InputStream in = this.getClass().getClassLoader().getResourceAsStream("tsdb.properties");
+            //在static方法中，通过类加载器得到配置文件
+            InputStream in = TSDBconfig.class.getClassLoader().getResourceAsStream("tsdb.properties");
             prop.load(in);     ///加载属性列表
             host = prop.getProperty("taos.host");
             username  = prop.getProperty("taos.username");
