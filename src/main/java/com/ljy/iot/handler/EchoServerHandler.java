@@ -32,6 +32,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
         ByteBuf in = (ByteBuf) msg;
         logger.info("服务端接收数据: " + in.toString());
 
+
         String[] strings = null;
         if(in.getByte(0) == 0x7b && in.getByte(1) == 0x09){
 
@@ -80,6 +81,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
             }
             deviceAdr = new BigInteger(deviceAdr,16).toString(10);
             strings[2] = deviceAdr;
+
 
             int x_flag = 0;
             int data_flag = 3;

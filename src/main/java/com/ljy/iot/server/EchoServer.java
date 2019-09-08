@@ -39,12 +39,12 @@ public class EchoServer {
                         public void initChannel(SocketChannel ch)
                                 throws Exception {
                             //分割符
-                            ByteBuf delimiter = Unpooled.copiedBuffer(new byte[]{(byte)0x7b});
+//                            ByteBuf delimiter = Unpooled.copiedBuffer(new byte[]{(byte)0x7b});
                             //打印分隔符
 //                            ch.pipeline().addLast("frameDecoder", new MyDelimiterBasedFrameDecoder(1024,false, delimiter));
 //                            ch.pipeline().addLast(  //7 添加 EchoServerHandler 到 Channel 的 ChannelPipeline
 //                                    new EchoServerHandler());
-                            ch.pipeline().addLast(new MyDecoder((byte) 0x3c,(byte) 0x3c));
+                            ch.pipeline().addLast(new MyDecoder((byte) 0x7b,(byte) 0x7b));
                             ch.pipeline().addLast(new MyHandler());
                         }
                     });
