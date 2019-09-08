@@ -23,6 +23,7 @@ public class MyDelimiterBasedFrameDecoder extends ByteToMessageDecoder {
     private final boolean failFast;
     private boolean discardingTooLongFrame;
     private int tooLongFrameLength;
+
     /** Set only when decoding with "\n" and "\r\n" as the delimiter.  */
     private final LineBasedFrameDecoder lineBasedDecoder;
 

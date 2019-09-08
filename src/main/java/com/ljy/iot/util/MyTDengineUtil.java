@@ -1,5 +1,6 @@
 package com.ljy.iot.util;
 
+import net.sf.cglib.beans.BeanMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,7 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,7 +53,62 @@ public class MyTDengineUtil {
         return resultSetToObject(resultSet,setMethods,clazz);
     }
 
+    public <T> List<T> getList(String sql, Class<T> clazz) throws IllegalAccessException, InstantiationException, SQLException {
 
+        List<T> list = new ArrayList<>();
+        Method[] setterMethods = getSetMethods(clazz);
+        ResultSet resultSet = connection.createStatement().executeQuery(sql);
+
+        while (resultSet.next())
+        {
+            list.add(resultSetToObject(resultSet, setterMethods, clazz));
+        }
+        return list;
+
+    }
+
+    public boolean insert(String tableName,Object o) throws SQLException {
+
+        Class clazz = o.getClass();
+        Map<String,Object> map = BeanMap.create(o);
+        String sql = createInsertSql(tableName,map);
+        return connection.createStatement().execute(sql);
+
+    }
+
+    public static String createInsertSql(String tableName,Map<String,Object> map) {
+        StringBuilder buffer = new StringBuilder();
+        buffer.append("INSERT INTO ").append(tableName).append(" (");
+
+        Set<Map.Entry<String,Object>> set = map.entrySet();
+
+        StringBuilder keys = new StringBuilder(" ");
+        StringBuilder value = new StringBuilder(" ");
+
+        for (Map.Entry<String,Object> entry : set){
+            keys.append(humpToLine(entry.getKey())).append(",");
+            try {
+                if (entry.getValue().getClass().equals(Date.class)){
+                    Date d = (Date)entry.getValue();
+                    value.append(d.getTime()).append(",");
+                }
+                else {
+                    value.append("'").append(entry.getValue()).append("'").append(",");
+                }
+            }
+            catch (Exception ignored) {
+
+            }
+        }
+
+        keys.deleteCharAt(keys.length()-1);
+        value.deleteCharAt(value.length()-1);
+
+        buffer.append(keys).append(") VALUES( ").append(value).append(")");
+        buffer.append(";");
+        System.out.println( buffer.toString());
+        return buffer.toString();
+    }
 
     public <T> T resultSetToObject(ResultSet resultSet, Method[] setterMethods, Class<T> clazz){
         T result = null;
@@ -65,7 +121,6 @@ public class MyTDengineUtil {
             System.out.println("请检查类" + clazz.getCanonicalName() + "是否有无参构造方法");
             e.printStackTrace();
         }
-
 
         for(Method method : setterMethods){
             try {
@@ -159,8 +214,5 @@ public class MyTDengineUtil {
         matcher.appendTail(sb);
         return sb.toString();
     }
-
-
-
 
 }

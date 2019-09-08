@@ -133,6 +133,7 @@ public class Entity5016 {
         this.illumination = Float.parseFloat(illumination);
         this.electric_quantity = Float.parseFloat(electric_quantity);
     }
+
     public String toSqlString(){
         return "insert into " + " iot.t_iot_sun5016 " + " values " + " ( " +
                 "\'" + getTs() + "\'," +

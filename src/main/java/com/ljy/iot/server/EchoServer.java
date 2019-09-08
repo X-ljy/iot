@@ -1,7 +1,9 @@
 package com.ljy.iot.server;
 
+import com.ljy.iot.decoder.MyDecoder;
 import com.ljy.iot.handler.EchoServerHandler;
 import com.ljy.iot.decoder.MyDelimiterBasedFrameDecoder;
+import com.ljy.iot.handler.MyHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -39,9 +41,11 @@ public class EchoServer {
                             //分割符
                             ByteBuf delimiter = Unpooled.copiedBuffer(new byte[]{(byte)0x7b});
                             //打印分隔符
-                            ch.pipeline().addLast("frameDecoder", new MyDelimiterBasedFrameDecoder(1024,false, delimiter));
-                            ch.pipeline().addLast(  //7 添加 EchoServerHandler 到 Channel 的 ChannelPipeline
-                                    new EchoServerHandler());
+//                            ch.pipeline().addLast("frameDecoder", new MyDelimiterBasedFrameDecoder(1024,false, delimiter));
+//                            ch.pipeline().addLast(  //7 添加 EchoServerHandler 到 Channel 的 ChannelPipeline
+//                                    new EchoServerHandler());
+                            ch.pipeline().addLast(new MyDecoder((byte) 0x3c,(byte) 0x3c));
+                            ch.pipeline().addLast(new MyHandler());
                         }
                     });
 

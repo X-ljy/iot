@@ -34,10 +34,10 @@ public class TDengineUtil {
         Properties connProps = new Properties();
         connProps.setProperty(TSDBDriver.PROPERTY_KEY_USER, username);
         connProps.setProperty(TSDBDriver.PROPERTY_KEY_PASSWORD, password);
-        connProps.setProperty(TSDBDriver.PROPERTY_KEY_CONFIG_DIR, "/etc/taos");
-        connProps.setProperty(TSDBDriver.PROPERTY_KEY_CHARSET, "UTF-8");
-        connProps.setProperty(TSDBDriver.PROPERTY_KEY_LOCALE, "en_US.UTF-8");
-        connProps.setProperty(TSDBDriver.PROPERTY_KEY_TIME_ZONE, "UTC-8");
+//        connProps.setProperty(TSDBDriver.PROPERTY_KEY_CONFIG_DIR, "/etc/taos");
+//        connProps.setProperty(TSDBDriver.PROPERTY_KEY_CHARSET, "UTF-8");
+//        connProps.setProperty(TSDBDriver.PROPERTY_KEY_LOCALE, "en_US.UTF-8");
+//        connProps.setProperty(TSDBDriver.PROPERTY_KEY_TIME_ZONE, "UTC-8");
         this.connection = DriverManager.getConnection(jdbcUrl, connProps);
         this.databaseColumnHumpToLine = databaseColumnHumpToLine;
 
@@ -127,8 +127,7 @@ public class TDengineUtil {
      * @throws SQLException
      */
     @SuppressWarnings("all")
-    public boolean insert(String tableName,Object o) throws SQLException
-    {
+    public boolean insert(String tableName,Object o) throws SQLException {
         Class clazz = o.getClass();
         Map<String,Object> map = BeanMap.create(o);
 
@@ -143,8 +142,7 @@ public class TDengineUtil {
      * @param map
      * @return
      */
-    public static String createInsertSql(String tableName,Map<String,Object> map)
-    {
+    public static String createInsertSql(String tableName,Map<String,Object> map) {
         StringBuilder buffer = new StringBuilder();
         buffer.append("INSERT INTO ").append(tableName).append(" (");
 
