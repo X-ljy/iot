@@ -30,8 +30,11 @@ public class MyDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+
         logger.info("进入Decoder的ByteBuf.readableBytes(): " + in.readableBytes());
+
         if(start != end){
+
             int length = in.readableBytes();
             int start_flag = in.indexOf(0,length,start);
             int end_flag = in.indexOf(0,length,end);
@@ -41,7 +44,9 @@ public class MyDecoder extends ByteToMessageDecoder {
                 in.skipBytes(in.readableBytes());
             }
             logger.info("退出Decoder的ByteBuf.readableBytes(): " + in.readableBytes());
+
         }else {
+
             int length = in.readableBytes();
             int start_flag = in.indexOf(0,length,start);
             if(start_flag < 0) {

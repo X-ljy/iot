@@ -23,8 +23,6 @@ public class testUtil {
         }
     }
     public static void main(String[] args) throws SQLException, InstantiationException, IllegalAccessException {
-
-        Connection conn = DriverManager.getConnection("jdbc:TAOS://49.235.215.208:0/iot?user=root&password=taosdata");
         MyTDengineUtil tDengineUtil = new MyTDengineUtil("jdbc:TAOS://49.235.215.208:0/iot?user=root&password=taosdata",true);
         TestEntity testEntity = new TestEntity();
         testEntity.setMyTs("2019-09-20 10:05:22");
@@ -38,10 +36,6 @@ public class testUtil {
         boolean isSussess = tDengineUtil.insert("test",testEntity);
         List<TestEntity> testEntity1 = tDengineUtil.getList(" select * from test where my_ts >= '2019-09-20 10:05:20';",TestEntity.class);
         System.out.println(testEntity1.get(1).getMyAddress());
-
-//        TDengineUtil tDengineUtil1 = new TDengineUtil(DriverManager.getConnection("jdbc:TAOS://49.235.215.208:0/iot?user=root&password=taosdata"),true);
-//        TestEntity testEntity1 = tDengineUtil1.getOne(" select * from test where my_ts >= '2019-09-20 10:05:20';",TestEntity.class);
-//        System.out.println(testEntity1.getMyAddress());
     }
 
 }

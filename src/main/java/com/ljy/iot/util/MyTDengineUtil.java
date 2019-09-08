@@ -4,7 +4,6 @@ import net.sf.cglib.beans.BeanMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -35,11 +34,9 @@ public class MyTDengineUtil {
         }
     }
 
-
     private  Connection connection;
     //是否开启数据库列名下划线转驼峰
     private boolean databaseColumnHumpToLine;
-
 
     public MyTDengineUtil(){
 

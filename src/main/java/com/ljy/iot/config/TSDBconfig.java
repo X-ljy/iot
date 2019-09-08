@@ -20,9 +20,9 @@ public class TSDBconfig {
     private static int port;
     private static String dbName;
 
-    private static String jdbcUrl;
+    public static String jdbcUrl;
 
-    public static String getJdbcUrl() {
+    static {
         Properties prop = new Properties();
         try{
             //在static方法中，通过类加载器得到配置文件
@@ -36,11 +36,10 @@ public class TSDBconfig {
             in.close();
         }
         catch(Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         jdbcUrl = String.format("%s%s:%d/%s?user=%s&password=%s", JDBC_PROTOCAL, host, port, dbName,
                 username,password);
-        return jdbcUrl;
     }
 
 

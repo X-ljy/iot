@@ -28,7 +28,7 @@ public class TSDButil {
     public static void doExecuteInsert(String sql) {
         Connection conn = null;
         try {
-            String jdbcUrl = TSDBconfig.getJdbcUrl();
+            String jdbcUrl = TSDBconfig.jdbcUrl;
             conn = DriverManager.getConnection(jdbcUrl);
             Statement stmt = conn.createStatement();
             logger.info("sql: \n" + sql);
