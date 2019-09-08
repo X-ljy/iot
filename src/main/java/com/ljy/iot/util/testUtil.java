@@ -3,27 +3,46 @@ package com.ljy.iot.util;
 import com.ljy.iot.config.TSDBconfig;
 import com.ljy.iot.entity.TestEntity;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author : 夕
  * @date : 2019/9/5
  */
 public class testUtil {
-
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-
-        TDengineUtil tDengineUtil = new TDengineUtil("jdbc:TAOS://49.235.215.208:0/iot","root","taosdata",false);
-        TestEntity testEntity = new TestEntity();
-        testEntity.setT_ts("2019-08-02 10:05:05");
-        testEntity.setT_id(1);
-        testEntity.setT_address("test001");
-        boolean isSussess = tDengineUtil.insert("test",testEntity);
-        if(isSussess){
-            System.out.println("插入成功");
-        }else {
-            System.out.println("插入失败");
+    private static final String TSDB_DRIVER = "com.taosdata.jdbc.TSDBDriver";
+    static {
+        try {
+            Class.forName(TSDB_DRIVER);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+    public static void main(String[] args) throws SQLException, InstantiationException, IllegalAccessException {
+
+        Connection conn = DriverManager.getConnection("jdbc:TAOS://49.235.215.208:0/iot?user=root&password=taosdata");
+        MyTDengineUtil tDengineUtil = new MyTDengineUtil("jdbc:TAOS://49.235.215.208:0/iot?user=root&password=taosdata",true);
+        TestEntity testEntity = new TestEntity();
+        testEntity.setMyTs("2019-09-20 10:05:22");
+        testEntity.setMyId(1);
+        testEntity.setMyAddress("test001");
+        /**
+         * 如果sql是select查询语句，返回值为true；
+         * 否则是false；
+         * 如果语句本身错误会抛出异常。
+         */
+        boolean isSussess = tDengineUtil.insert("test",testEntity);
+        List<TestEntity> testEntity1 = tDengineUtil.getList(" select * from test where my_ts >= '2019-09-20 10:05:20';",TestEntity.class);
+        System.out.println(testEntity1.get(1).getMyAddress());
+
+//        TDengineUtil tDengineUtil1 = new TDengineUtil(DriverManager.getConnection("jdbc:TAOS://49.235.215.208:0/iot?user=root&password=taosdata"),true);
+//        TestEntity testEntity1 = tDengineUtil1.getOne(" select * from test where my_ts >= '2019-09-20 10:05:20';",TestEntity.class);
+//        System.out.println(testEntity1.getMyAddress());
+    }
+
 }
+

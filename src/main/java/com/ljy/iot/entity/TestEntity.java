@@ -6,33 +6,32 @@ package com.ljy.iot.entity;
  */
 public class TestEntity {
 
-    private String t_ts;
-    private int t_id;
-    private String t_address;
+    private String myTs;
+    private int myId;
+    private String myAddress;
 
 
-    public int getT_id() {
-        return t_id;
+    public String getMyTs() {
+        return myTs;
     }
 
-    public void setT_id(int t_id) {
-        this.t_id = t_id;
+    public void setMyTs(String myTs) {
+        this.myTs = myTs;
     }
 
-    public String getT_ts() {
-        return t_ts;
+    public int getMyId() {
+        return myId;
     }
 
-    public void setT_ts(String t_ts) {
-        this.t_ts = t_ts;
+    public void setMyId(int myId) {
+        this.myId = myId;
     }
 
-
-    public String getT_address() {
-        return t_address;
+    public String getMyAddress() {
+        return myAddress;
     }
 
-    public void setT_address(String t_address) {
-        this.t_address = t_address;
+    public void setMyAddress(String myAddress) {
+        this.myAddress = myAddress;
     }
 }

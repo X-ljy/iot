@@ -14,6 +14,8 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.ljy.iot.util.TDengineUtil.getFieldNameBySetter;
+
 /**
  * @author : 夕
  * @date : 2019/9/4
@@ -24,6 +26,7 @@ public class MyTDengineUtil {
 
     private static final String TSDB_DRIVER = "com.taosdata.jdbc.TSDBDriver";
 
+    //加载驱动
     static {
         try {
             Class.forName(TSDB_DRIVER);
@@ -32,7 +35,9 @@ public class MyTDengineUtil {
         }
     }
 
+
     private  Connection connection;
+    //是否开启数据库列名下划线转驼峰
     private boolean databaseColumnHumpToLine;
 
 
@@ -45,7 +50,7 @@ public class MyTDengineUtil {
         this.databaseColumnHumpToLine = databaseColumnHumpToLine;
     }
 
-    public <T> T getOne(String sql, Class<T> clazz) throws SQLException {
+    public <T> T getOne(String sql, Class<T> clazz) throws SQLException, InstantiationException, IllegalAccessException {
         Method[] setMethods = getSetMethods(clazz);
         ResultSet resultSet = connection.createStatement().executeQuery(sql);
 
@@ -53,7 +58,7 @@ public class MyTDengineUtil {
         return resultSetToObject(resultSet,setMethods,clazz);
     }
 
-    public <T> List<T> getList(String sql, Class<T> clazz) throws IllegalAccessException, InstantiationException, SQLException {
+    public <T> List<T> getList(String sql, Class<T> clazz) throws SQLException, InstantiationException, IllegalAccessException {
 
         List<T> list = new ArrayList<>();
         Method[] setterMethods = getSetMethods(clazz);
@@ -110,26 +115,34 @@ public class MyTDengineUtil {
         return buffer.toString();
     }
 
-    public <T> T resultSetToObject(ResultSet resultSet, Method[] setterMethods, Class<T> clazz){
-        T result = null;
-
-        try{
+    public <T> T resultSetToObject(ResultSet resultSet, Method[] setterMethods, Class<T> clazz) throws IllegalAccessException, InstantiationException {
+        T result;
+        try
+        {
             result = clazz.newInstance();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
+        }
+        catch (InstantiationException e)
+        {
             System.out.println("请检查类" + clazz.getCanonicalName() + "是否有无参构造方法");
-            e.printStackTrace();
+            throw e;
         }
 
-        for(Method method : setterMethods){
-            try {
-                String fieldName = getFieldNameBySetMethod(method);
-                Class paramClass = method.getParameterTypes()[0];
+
+        for (Method method : setterMethods)
+        {
+            try
+            {
+                String fieldName = getFieldNameBySetter(method);
+
+                //因为标准的setter方法只会有一个参数，所以取一个就行了
+                Class getParamClass = method.getParameterTypes()[0];
 
 
+
+                //获得查询的结果
                 Object resultObject;
 
+                //是否启用驼峰转下划线规则获得数据库字段名
                 if (databaseColumnHumpToLine)
                 {
                     resultObject = resultSet.getObject(humpToLine(fieldName));
@@ -139,12 +152,17 @@ public class MyTDengineUtil {
                     resultObject = resultSet.getObject(fieldName);
                 }
 
-                if(paramClass.equals(String.class)){
-                    method.invoke(result,resultObject.toString());
-
-                } else if (paramClass.equals(Date.class) && resultObject.getClass().equals(Long.class)) {
+                //如果实体类的类型是String类型，那么无论x数据库类型是什么，都调用其toString方法获取值
+                if (getParamClass.equals(String.class))
+                {
+                    method.invoke(result, resultObject.toString());
+                }
+                else if (getParamClass.equals(Date.class) && resultObject.getClass().equals(Long.class))
+                {
                     method.invoke(result, new Date((Long) resultObject));
-                } else {
+                }
+                else
+                {
                     try
                     {
                         method.invoke(result, resultObject);
@@ -152,16 +170,13 @@ public class MyTDengineUtil {
                     catch (IllegalArgumentException e)
                     {
                         //对象字段与数据库类型(通过jdbc读取到的)不一致的情况下，将尝试强制转型
-                        method.invoke(result, paramClass.cast(resultObject));
+                        method.invoke(result, getParamClass.cast(resultObject));
                     }
                 }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
+            }
+            catch (Exception ignored)
+            {
+                //所有的转型都失败了，则使用默认值
             }
         }
 
@@ -203,7 +218,7 @@ public class MyTDengineUtil {
 
     private static Pattern humpPattern = Pattern.compile("[A-Z]");
     /**
-     * 驼峰转下划线,效率比上面高
+     * 驼峰转下划线
      */
     public static String humpToLine(String str) {
         Matcher matcher = humpPattern.matcher(str);

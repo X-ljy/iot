@@ -1,5 +1,10 @@
 package com.ljy.iot.util;
 
+/**
+ * @author : 夕
+ * @date : 2019/9/8
+ */
+
 import com.taosdata.jdbc.TSDBDriver;
 import net.sf.cglib.beans.BeanMap;
 
@@ -15,32 +20,31 @@ import java.util.regex.Pattern;
 /**
  * @author guolinyuan
  */
-public class TDengineUtil {
-
+public class TDengineUtil
+{
     private Connection connection;
     private boolean databaseColumnHumpToLine;
 
     /**
+     *
      * @param url url 例如 ： "jdbc:TAOS://127.0.0.1:6020/netuo_iot"
      * @param username 例如： "root"
      * @param password 例如： "taosdata"
      * @param databaseColumnHumpToLine 是否需要数据库列名下划线转驼峰
      */
-
-    public TDengineUtil(String url, String username, String password, boolean databaseColumnHumpToLine) throws ClassNotFoundException, SQLException {
-
+    public TDengineUtil(String url, String username, String password, boolean databaseColumnHumpToLine) throws ClassNotFoundException, SQLException
+    {
         Class.forName("com.taosdata.jdbc.TSDBDriver");
         String jdbcUrl = url;
         Properties connProps = new Properties();
         connProps.setProperty(TSDBDriver.PROPERTY_KEY_USER, username);
         connProps.setProperty(TSDBDriver.PROPERTY_KEY_PASSWORD, password);
-//        connProps.setProperty(TSDBDriver.PROPERTY_KEY_CONFIG_DIR, "/etc/taos");
-//        connProps.setProperty(TSDBDriver.PROPERTY_KEY_CHARSET, "UTF-8");
-//        connProps.setProperty(TSDBDriver.PROPERTY_KEY_LOCALE, "en_US.UTF-8");
-//        connProps.setProperty(TSDBDriver.PROPERTY_KEY_TIME_ZONE, "UTC-8");
+        connProps.setProperty(TSDBDriver.PROPERTY_KEY_CONFIG_DIR, "/etc/taos");
+        connProps.setProperty(TSDBDriver.PROPERTY_KEY_CHARSET, "UTF-8");
+        connProps.setProperty(TSDBDriver.PROPERTY_KEY_LOCALE, "en_US.UTF-8");
+        connProps.setProperty(TSDBDriver.PROPERTY_KEY_TIME_ZONE, "UTC-8");
         this.connection = DriverManager.getConnection(jdbcUrl, connProps);
         this.databaseColumnHumpToLine = databaseColumnHumpToLine;
-
     }
 
     /**
@@ -74,7 +78,6 @@ public class TDengineUtil {
      * @throws InstantiationException
      * @throws SQLException
      */
-
     public <T> T getOne(String sql, Class<T> clazz) throws IllegalAccessException, InstantiationException, SQLException
     {
         Method[] setterMethods = getSetterMethods(clazz);
@@ -127,7 +130,8 @@ public class TDengineUtil {
      * @throws SQLException
      */
     @SuppressWarnings("all")
-    public boolean insert(String tableName,Object o) throws SQLException {
+    public boolean insert(String tableName,Object o) throws SQLException
+    {
         Class clazz = o.getClass();
         Map<String,Object> map = BeanMap.create(o);
 
@@ -135,14 +139,14 @@ public class TDengineUtil {
         return connection.createStatement().execute(sql);
     }
 
-
     /**
      * 生成插入sql语句
      * @param tableName
      * @param map
      * @return
      */
-    public static String createInsertSql(String tableName,Map<String,Object> map) {
+    public static String createInsertSql(String tableName,Map<String,Object> map)
+    {
         StringBuilder buffer = new StringBuilder();
         buffer.append("INSERT INTO ").append(tableName).append(" (");
 
@@ -222,6 +226,8 @@ public class TDengineUtil {
 
                 //因为标准的setter方法只会有一个参数，所以取一个就行了
                 Class getParamClass = method.getParameterTypes()[0];
+
+
 
                 //获得查询的结果
                 Object resultObject;
@@ -374,7 +380,8 @@ public class TDengineUtil {
     /**
      * 驼峰转下划线,效率比上面高
      */
-    public static String humpToLine(String str) {
+    public static String humpToLine(String str)
+    {
         Matcher matcher = humpPattern.matcher(str);
         StringBuffer sb = new StringBuffer();
         while (matcher.find())
@@ -384,5 +391,4 @@ public class TDengineUtil {
         matcher.appendTail(sb);
         return sb.toString();
     }
-
 }
