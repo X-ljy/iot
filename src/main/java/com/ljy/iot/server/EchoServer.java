@@ -1,5 +1,6 @@
 package com.ljy.iot.server;
 
+import com.ljy.iot.config.DecopConfig;
 import com.ljy.iot.decoder.MyDecoder;
 import com.ljy.iot.handler.EchoServerHandler;
 import com.ljy.iot.decoder.MyDelimiterBasedFrameDecoder;
@@ -38,17 +39,10 @@ public class EchoServer {
                         @Override
                         public void initChannel(SocketChannel ch)
                                 throws Exception {
-                            //分割符
-//                            ByteBuf delimiter = Unpooled.copiedBuffer(new byte[]{(byte)0x7b});
-                            //打印分隔符
-//                            ch.pipeline().addLast("frameDecoder", new MyDelimiterBasedFrameDecoder(1024,false, delimiter));
-//                            ch.pipeline().addLast(  //7 添加 EchoServerHandler 到 Channel 的 ChannelPipeline
-//                                    new EchoServerHandler());
-                            ch.pipeline().addLast(new MyDecoder((byte) 0x7b,(byte) 0x7b));
+                            ch.pipeline().addLast(new MyDecoder(DecopConfig.data_start,DecopConfig.data_end));
                             ch.pipeline().addLast(new MyHandler());
                         }
                     });
-
 
             ChannelFuture f = b.bind().sync();            //8 绑定的服务器;sync 等待服务器关闭
             System.out.println(EchoServer.class.getName() + " started and listen on " + f.channel().localAddress());
