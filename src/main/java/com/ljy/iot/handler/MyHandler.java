@@ -13,6 +13,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -55,13 +56,35 @@ public class MyHandler extends SimpleChannelInboundHandler {
             TSDButil.doExecuteInsert(entity5015.toSqlString());
         }
 
+        //诱娥心跳数据
+        if(byteBuf.getByte(DecopConfig.data_start1_index) == DecopConfig.data_start[DecopConfig.data_start1_index] &&
+                byteBuf.getByte(DecopConfig.data_start2_index) == DecopConfig.data_start[DecopConfig.data_start2_index] &&
+                byteBuf.getByte(DecopConfig.field_start_index) == DecopConfig.field_start){
+
+            int length = byteBuf.readableBytes();
+            byte[] bytes = new byte[length];
+            for(int i = 0;i < length; i++){
+                bytes[i] = byteBuf.getByte(i);
+            }
+            logger.info("诱娥心跳数据：" + new String(bytes,"ascii"));
+
+        }
+
         //诱娥图片
         if(byteBuf.getByte(DecopConfig.data_start1_index) == DecopConfig.data_start[DecopConfig.data_start1_index] &&
-                byteBuf.getByte(DecopConfig.data_start2_index) == DecopConfig.data_start[DecopConfig.data_start2_index]){
+                byteBuf.getByte(DecopConfig.data_start2_index) == DecopConfig.data_start[DecopConfig.data_start2_index] &&
+                byteBuf.getByte(DecopConfig.field_start_index) != DecopConfig.field_start ){
+
+                logger.info("诱娥图片");
+
                 if(byteBuf.hasArray()){
-                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss");//设置日期格式
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");//设置日期格式
                     byte[] bytes = byteBuf.array();
-                    FileOutputStream fout = new FileOutputStream(df.format(new Date()) + ".jpg");
+                    File dir = new File("\\image\\5017\\");
+                    if(!dir.exists()){
+                        dir.mkdir();
+                    }
+                    FileOutputStream fout = new FileOutputStream(new File(dir.getPath() + "\\" + df.format(new Date()) + ".jpg"));
                     //将字节写入文件
                     fout.write(bytes);
                     fout.close();
@@ -71,8 +94,12 @@ public class MyHandler extends SimpleChannelInboundHandler {
                     for (int i = 0;i<length;i++){
                         bytes[i] = byteBuf.getByte(i);
                     }
-                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss");//设置日期格式
-                    FileOutputStream fout = new FileOutputStream("/image/5017/"+df.format(new Date()) + ".jpg");
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");//设置日期格式
+                    File dir = new File("\\image\\5017\\");
+                    if(!dir.exists()){
+                        dir.mkdir();
+                    }
+                    FileOutputStream fout = new FileOutputStream(new File(dir.getPath()  + "\\" + df.format(new Date()) + ".jpg"));
                     //将字节写入文件
                     fout.write(bytes);
                     fout.close();
@@ -80,13 +107,7 @@ public class MyHandler extends SimpleChannelInboundHandler {
 
         }
 
-        //诱娥数据
-        if(byteBuf.getByte(DecopConfig.data_start1_index) == DecopConfig.data_start[DecopConfig.data_start1_index] &&
-                byteBuf.getByte(DecopConfig.data_start2_index) == DecopConfig.data_start[DecopConfig.data_start2_index] &&
-                byteBuf.getByte(DecopConfig.field_start_index) == DecopConfig.field_start){
 
-
-        }
 
 
 

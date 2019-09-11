@@ -17,6 +17,8 @@ public class MyDecoder extends ByteToMessageDecoder {
     private byte start ;
     private byte end ;
 
+    private boolean ok = false;
+
     public MyDecoder(byte start,byte end){
         this.start = start;
         this.end = end;
@@ -96,10 +98,9 @@ public class MyDecoder extends ByteToMessageDecoder {
             }
 
             if(startSuccess){
-                for(int i = 0; i < end_length ; i++){
-                    end_flag[i] = in.indexOf(start_flag[start_length-1] + 1 ,length - start_flag[start_length-1],ends[i]);
+                for( int i = end_length-1;i>=0;i--){
+                    end_flag[i] = getDataEndIndex(in,start_flag[start_length-1] + 1 ,length - start_flag[start_length-1] + 1 ,ends[i]);
                 }
-
                 for(int i = 0;i< end_length -1 ;i++){
                     if((end_flag[i] + 1) == end_flag[i+1] ){
                         endSuccess = true;
@@ -111,6 +112,7 @@ public class MyDecoder extends ByteToMessageDecoder {
             }
 
             if(startSuccess && endSuccess){
+                logger.info("诱娥数据读取成功");
                 out.add(in.copy(start_flag[0],end_flag[end_length-1] - start_flag[0] + 1));
                 in.skipBytes(in.readableBytes());
                 logger.info("退出Decoder的ByteBuf.readableBytes(): " + in.readableBytes());
@@ -119,8 +121,19 @@ public class MyDecoder extends ByteToMessageDecoder {
                 return;
             }
 
+
         }
 
-
     }
+
+    private int getDataEndIndex(ByteBuf byteBuf,int start,int end,byte flag){
+
+        for(int i = end -1 ; i >= start ; i--){
+            if(flag == byteBuf.getByte(i)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
 }
