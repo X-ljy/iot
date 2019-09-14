@@ -73,9 +73,6 @@ public class MyHandler extends SimpleChannelInboundHandler {
             start = byteBuf.indexOf(0,length,DecopConfig.field_start);
             end = byteBuf.indexOf(0,length,DecopConfig.field_end);
 
-
-
-
         }
 
         //诱娥图片
