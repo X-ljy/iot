@@ -3,7 +3,6 @@ package com.ljy.iot.handler;
 import com.ljy.iot.config.DataSunConfig;
 import com.ljy.iot.config.DecopConfig;
 import com.ljy.iot.config.ResponseConfig;
-import com.ljy.iot.decoder.MyDecoder;
 import com.ljy.iot.entity.Entity5015;
 import com.ljy.iot.util.DataUtil1;
 import com.ljy.iot.util.TSDButil;
@@ -61,12 +60,21 @@ public class MyHandler extends SimpleChannelInboundHandler {
                 byteBuf.getByte(DecopConfig.data_start2_index) == DecopConfig.data_start[DecopConfig.data_start2_index] &&
                 byteBuf.getByte(DecopConfig.field_start_index) == DecopConfig.field_start){
 
+
             int length = byteBuf.readableBytes();
             byte[] bytes = new byte[length];
             for(int i = 0;i < length; i++){
                 bytes[i] = byteBuf.getByte(i);
             }
             logger.info("诱娥心跳数据：" + new String(bytes,"ascii"));
+
+            int start;
+            int end;
+            start = byteBuf.indexOf(0,length,DecopConfig.field_start);
+            end = byteBuf.indexOf(0,length,DecopConfig.field_end);
+
+
+
 
         }
 
@@ -106,8 +114,6 @@ public class MyHandler extends SimpleChannelInboundHandler {
                 }
 
         }
-
-
 
 
 
@@ -187,7 +193,6 @@ public class MyHandler extends SimpleChannelInboundHandler {
         logger.info("数据存储length :" + strings.length);
         return strings;
     }
-
 
 
 }
