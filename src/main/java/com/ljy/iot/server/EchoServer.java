@@ -35,7 +35,7 @@ public class EchoServer {
                         @Override
                         public void initChannel(SocketChannel ch)
                                 throws Exception {
-                            ch.pipeline().addLast(new MyDecoder(DecopConfig.data_start,DecopConfig.data_end));
+                            ch.pipeline().addLast(new MyDecoder((byte)0x7b,(byte)0x7b));
                             ch.pipeline().addLast(new MyHandler());
                         }
                     });
