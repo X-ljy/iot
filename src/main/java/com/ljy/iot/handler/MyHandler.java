@@ -117,6 +117,12 @@ public class MyHandler extends SimpleChannelInboundHandler {
 
     }
 
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        logger.warn(cause.getMessage());
+        ctx.close();
+    }
+
     private byte[] getResponse(ByteBuf byteBuf){
         byte[] bytes = new byte[ResponseConfig.response_length2];
         bytes[ResponseConfig.response_start_flag_index] = ResponseConfig.response_start_flag;
