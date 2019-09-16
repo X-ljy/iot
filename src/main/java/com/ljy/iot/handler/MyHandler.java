@@ -43,8 +43,9 @@ public class MyHandler extends SimpleChannelInboundHandler {
         if( byteBuf.getByte(ResponseConfig.request_type_index) == ResponseConfig.request_type ){
             byte[] bytes = getResponse(byteBuf);
             logger.info("返回应答：" + new String(bytes,"ascii"));
+            //必须构建出一个ByteBuf，将字节写入此再进行写入此ByteBuf，不然会报 Connection reset by peer
             ByteBuf out = Unpooled.buffer(bytes.length);
-            out.setBytes(0,bytes);
+            out.writeBytes(bytes);
             ctx.writeAndFlush(out);
         }
 
