@@ -8,6 +8,7 @@ import com.ljy.iot.entity.Entity5016;
 import com.ljy.iot.util.DataUtil1;
 import com.ljy.iot.util.TSDButil;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
@@ -42,7 +43,9 @@ public class MyHandler extends SimpleChannelInboundHandler {
         if( byteBuf.getByte(ResponseConfig.request_type_index) == ResponseConfig.request_type ){
             byte[] bytes = getResponse(byteBuf);
             logger.info("返回应答：" + new String(bytes,"ascii"));
-            ctx.writeAndFlush(bytes);
+            ByteBuf out = Unpooled.buffer(bytes.length);
+            out.setBytes(0,bytes);
+            ctx.writeAndFlush(out);
         }
 
         if(byteBuf.getByte(DataSunConfig.data_type_index) == DataSunConfig.data_type){
