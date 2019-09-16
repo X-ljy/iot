@@ -115,6 +115,7 @@ create table t_iot_sun5016 using iot_sun tags ('sun','40326904964');
 -- 5015设备表--
 create table t_iot_sun5015 using iot_sun2 tags ('sun2','40378510054');
 
+
 --诱娥超级表 --
 create table iot_decoy (
 ts timestamp,
@@ -137,3 +138,13 @@ magnetic_declination float ,
 direction_magnetic_declination binary(20),
 mode_indication binary(20)
 ) tags (device_id binary(20));
+
+//        //5016
+//        byte[] bytes1 = new byte[]{(byte) 0x7B, (byte) 0x81, (byte) 0x00 ,(byte) 0x10,
+//                (byte) 0x34, (byte) 0x30, (byte) 0x33, (byte) 0x32, (byte) 0x36, (byte) 0x39, (byte) 0x30, (byte) 0x34, (byte) 0x39, (byte) 0x36, (byte) 0x34,
+//                (byte) 0x7B};
+
+//        5015
+        byte[] bytes1 = new byte[]{(byte) 0x7B, (byte) 0x81, (byte) 0x00 ,(byte) 0x10,
+                (byte) 0x34, (byte) 0x30, (byte) 0x33, (byte) 0x37, (byte) 0x38, (byte) 0x35, (byte) 0x31, (byte) 0x30, (byte) 0x30, (byte) 0x35, (byte) 0x34,
+                (byte) 0x7B};
