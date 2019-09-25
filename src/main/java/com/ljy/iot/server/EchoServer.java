@@ -43,6 +43,7 @@ public class EchoServer {
                     });
 
             ChannelFuture f = b.bind().sync();            //8 绑定的服务器;sync 等待服务器关闭
+            System.out.println(EchoServer.class.getName() + " started and listen on " + f.channel().localAddress());
             f.channel().closeFuture().sync();            //9 关闭 channel 和 块，直到它被关闭
         } finally {
             group.shutdownGracefully().sync();            //10 .关闭 EventLoopGroup，释放所有资源。
