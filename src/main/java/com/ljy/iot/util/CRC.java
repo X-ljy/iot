@@ -34,6 +34,8 @@ public class CRC {
 
         String temp = Integer.toHexString(CRC);
 
+        System.out.println("校验返回值的lengh: " + temp.length());
+
         String a = temp.substring(0,2);
         String b = temp.substring(2,4);
 
