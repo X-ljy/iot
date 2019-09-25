@@ -72,7 +72,6 @@ public class TestHandler extends SimpleChannelInboundHandler {
             out.writeBytes(responseByte);
             ctx.writeAndFlush(out);
 
-            logger.info("响应 ");
 
         }else {
             logger.info("校验失败 ");
