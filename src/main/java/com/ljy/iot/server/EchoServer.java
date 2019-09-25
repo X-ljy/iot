@@ -3,6 +3,7 @@ package com.ljy.iot.server;
 import com.ljy.iot.config.DecopConfig;
 import com.ljy.iot.decoder.MyDecoder;
 import com.ljy.iot.handler.MyHandler;
+import com.ljy.iot.handler.TestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -35,13 +36,13 @@ public class EchoServer {
                         @Override
                         public void initChannel(SocketChannel ch)
                                 throws Exception {
-                            ch.pipeline().addLast(new MyDecoder(DecopConfig.data_start,DecopConfig.data_end));
-                            ch.pipeline().addLast(new MyHandler());
+//                            ch.pipeline().addLast(new MyDecoder(DecopConfig.data_start,DecopConfig.data_end));
+//                            ch.pipeline().addLast(new MyHandler());
+                            ch.pipeline().addLast(new TestHandler());
                         }
                     });
 
             ChannelFuture f = b.bind().sync();            //8 绑定的服务器;sync 等待服务器关闭
-            System.out.println(EchoServer.class.getName() + " started and listen on " + f.channel().localAddress());
             f.channel().closeFuture().sync();            //9 关闭 channel 和 块，直到它被关闭
         } finally {
             group.shutdownGracefully().sync();            //10 .关闭 EventLoopGroup，释放所有资源。
