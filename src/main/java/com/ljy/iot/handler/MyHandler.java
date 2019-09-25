@@ -41,6 +41,7 @@ public class MyHandler extends SimpleChannelInboundHandler {
 
         if( byteBuf.getByte(ResponseConfig.request_type_index) == ResponseConfig.request_type ){
             byte[] bytes = getResponse(byteBuf);
+            //不能返回byte 要返回 BufferBuf,暂时没有更改，以后在说
             logger.info("返回应答：" + new String(bytes,"ascii"));
             ctx.writeAndFlush(bytes);
         }
