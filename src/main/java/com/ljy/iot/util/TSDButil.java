@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * @author : 夕
@@ -38,10 +40,26 @@ public class TSDButil {
         }
     }
 
-//    public static void main(String[] args) {
-//        TSDButil tester = new TSDButil();
-//        tester.doExecuteInsert("insert into test values('2018-06-07 08:00:11.000',0.456)");
-//    }
+    public static void doExecuteQuery(String sql){
+        Connection conn = null;
+        try {
+            String jdbcUrl = TSDBconfig.jdbcUrl;
+            conn = DriverManager.getConnection(jdbcUrl);
+            Statement stmt = conn.createStatement();
+            logger.info("sql: \n" + sql);
+//            System.out.println(stmt.executeQuery(sql) == null);
+            ResultSet resultSet = stmt.executeQuery(sql);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+
+        TSDButil.doExecuteQuery("select * from iot.t_iot_sun5015 where ts >= '2019-09-22 16:15:11';");
+
+    }
 
 
 }

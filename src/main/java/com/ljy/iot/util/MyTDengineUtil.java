@@ -59,10 +59,10 @@ public class MyTDengineUtil {
 
         List<T> list = new ArrayList<>();
         Method[] setterMethods = getSetMethods(clazz);
+
         ResultSet resultSet = connection.createStatement().executeQuery(sql);
 
-        while (resultSet.next())
-        {
+        while (resultSet.next()){
             list.add(resultSetToObject(resultSet, setterMethods, clazz));
         }
         return list;

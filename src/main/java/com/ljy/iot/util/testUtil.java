@@ -1,6 +1,7 @@
 package com.ljy.iot.util;
 
 import com.ljy.iot.config.TSDBconfig;
+import com.ljy.iot.entity.Entity5015;
 import com.ljy.iot.entity.TestEntity;
 
 import java.sql.Connection;
@@ -22,20 +23,22 @@ public class testUtil {
             e.printStackTrace();
         }
     }
-    public static void main(String[] args) throws SQLException, InstantiationException, IllegalAccessException {
+    public static void main(String[] args) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         MyTDengineUtil tDengineUtil = new MyTDengineUtil("jdbc:TAOS://49.235.215.208:0/iot?user=root&password=taosdata",true);
-        TestEntity testEntity = new TestEntity();
-        testEntity.setMyTs("2019-09-20 10:05:22");
-        testEntity.setMyId(1);
-        testEntity.setMyAddress("test001");
-        /**
-         * 如果sql是select查询语句，返回值为true；
-         * 否则是false；
-         * 如果语句本身错误会抛出异常。
-         */
-        boolean isSussess = tDengineUtil.insert("test",testEntity);
-        List<TestEntity> testEntity1 = tDengineUtil.getList(" select * from test where my_ts >= '2019-09-20 10:05:20';",TestEntity.class);
-        System.out.println(testEntity1.get(1).getMyAddress());
+//        TDengineUtil tDengineUtil = new TDengineUtil("jdbc:TAOS://49.235.215.208:0/iot","root","taosdata",true);
+//        TestEntity testEntity = new TestEntity();
+//        testEntity.setMyTs("2019-09-20 10:05:22");
+//        testEntity.setMyId(1);
+//        testEntity.setMyAddress("test001");
+//        /**
+//         * 如果sql是select查询语句，返回值为true；
+//         * 否则是false；
+//         * 如果语句本身错误会抛出异常。
+//         */
+//        boolean isSussess = tDengineUtil.insert("test",testEntity); select * from iot.t_iot_sun5015 where ts >= '2019-09-22 16:15:11';
+//        List<TestEntity> testEntity1 = tDengineUtil.getList("",TestEntity.class);
+        List<TestEntity> testEntity1 = tDengineUtil.getList(" select * from test where my_ts >= '2019-09-20 10:05:20'; ",TestEntity.class);
+        System.out.println(testEntity1.get(0).getMy_name());
     }
 
 }

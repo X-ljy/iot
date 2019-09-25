@@ -6,32 +6,33 @@ package com.ljy.iot.entity;
  */
 public class TestEntity {
 
-    private String myTs;
-    private int myId;
-    private String myAddress;
+//    create table stest (my_ts timestamp ,my_name binary(20) , my_age float) tags ( my_sex binary(20));
+    private String my_ts;
+    private String my_name;
+    private float my_age;
 
 
-    public String getMyTs() {
-        return myTs;
+    public String getMy_ts() {
+        return my_ts;
     }
 
-    public void setMyTs(String myTs) {
-        this.myTs = myTs;
+    public void setMy_ts(String my_ts) {
+        this.my_ts = my_ts;
     }
 
-    public int getMyId() {
-        return myId;
+    public String getMy_name() {
+        return my_name;
     }
 
-    public void setMyId(int myId) {
-        this.myId = myId;
+    public void setMy_name(String my_name) {
+        this.my_name = my_name;
     }
 
-    public String getMyAddress() {
-        return myAddress;
+    public float getMy_age() {
+        return my_age;
     }
 
-    public void setMyAddress(String myAddress) {
-        this.myAddress = myAddress;
+    public void setMy_age(float my_age) {
+        this.my_age = my_age;
     }
 }
