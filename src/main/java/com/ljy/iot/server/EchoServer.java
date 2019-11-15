@@ -1,7 +1,6 @@
 package com.ljy.iot.server;
 
 import com.ljy.iot.decoder.WeatherDecoder;
-import com.ljy.iot.handler.TestHandler;
 import com.ljy.iot.handler.WeatherHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
