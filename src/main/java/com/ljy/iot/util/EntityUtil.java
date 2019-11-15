@@ -1,7 +1,5 @@
 package com.ljy.iot.util;
 
-import com.ljy.iot.entity.Entity5015;
-
 /**
  * @author : 夕
  * @date : 2019/9/9
