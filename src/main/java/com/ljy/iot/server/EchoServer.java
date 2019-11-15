@@ -1,7 +1,8 @@
 package com.ljy.iot.server;
 
-import com.ljy.iot.decoder.TestDecoder;
+import com.ljy.iot.decoder.WeatherDecoder;
 import com.ljy.iot.handler.TestHandler;
+import com.ljy.iot.handler.WeatherHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -34,10 +35,8 @@ public class EchoServer {
                         @Override
                         public void initChannel(SocketChannel ch)
                                 throws Exception {
-//                            ch.pipeline().addLast(new MyDecoder(DecopConfig.data_start,DecopConfig.data_end));
-//                            ch.pipeline().addLast(new MyHandler());
-                            ch.pipeline().addLast(new TestDecoder());
-                            ch.pipeline().addLast(new TestHandler());
+                            ch.pipeline().addLast(new WeatherDecoder());
+                            ch.pipeline().addLast(new WeatherHandler());
                         }
                     });
 

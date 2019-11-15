@@ -27,18 +27,14 @@ public class WeatherDecoder  extends ByteToMessageDecoder {
 
         if(     in.getByte(start_index + 1 ) == WeatherIdConfig.id[1] &&
                 in.getByte(start_index + 2 ) == WeatherIdConfig.id[2] &&
-                in.getByte(start_index + 3 ) == WeatherIdConfig.id[3]) {
+                in.getByte(start_index + 3 ) == WeatherIdConfig.id[3] &&
+                start_index + 68 <= length) {
 
-            out.add(in.copy(command_index - 4 ,command_index + 67 + 1));
+            out.add(in.copy(start_index ,start_index + 72 ));
             in.skipBytes(in.readableBytes());
 
         }
 
-
-        if(command_index >= 4 && length >= 72){
-            out.add(in.copy(command_index - 4 ,command_index + 67 + 1));
-            in.skipBytes(in.readableBytes());
-        }
 
         logger.info("退出Decoder的ByteBuf.readableBytes(): " + in.readableBytes());
     }
