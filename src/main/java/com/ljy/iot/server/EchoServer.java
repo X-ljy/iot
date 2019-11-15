@@ -1,9 +1,6 @@
 package com.ljy.iot.server;
 
-import com.ljy.iot.config.DecopConfig;
-import com.ljy.iot.decoder.MyDecoder;
 import com.ljy.iot.decoder.TestDecoder;
-import com.ljy.iot.handler.MyHandler;
 import com.ljy.iot.handler.TestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -11,10 +8,7 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
 
-import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 
 /**

@@ -20,13 +20,8 @@ public class TestHandler extends SimpleChannelInboundHandler {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
-        ByteBuf byteBuf = (ByteBuf) msg;
 
-        byte[] asciiBytes = new byte[byteBuf.capacity()];
-        for (int i = 0; i < byteBuf.capacity(); i++) {
-            asciiBytes[i] = byteBuf.getByte(i);
-        }
-        logger.info("数据ASCII编码处理：" + new String(asciiBytes,"ascii"));
+        ByteBuf byteBuf = (ByteBuf) msg;
 
         int length = byteBuf.readableBytes();
         byte[] bytes = new byte[length];
@@ -39,6 +34,7 @@ public class TestHandler extends SimpleChannelInboundHandler {
             System.out.print(Integer.toHexString(bytes[i]) + " ");
         }
         System.out.println();
+
         byte[] bytes1 = new byte[70];
         for(int j = 0;j < 70 ;j++){
             bytes1[j] = bytes[j];

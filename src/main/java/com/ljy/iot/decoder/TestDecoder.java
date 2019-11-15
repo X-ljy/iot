@@ -28,6 +28,5 @@ public class TestDecoder extends ByteToMessageDecoder {
         }
         logger.info("退出Decoder的ByteBuf.readableBytes(): " + in.readableBytes());
 
-
     }
 }
