@@ -52,6 +52,11 @@ public class WeatherHandler extends SimpleChannelInboundHandler {
 
         }else {
             logger.info("校验失败 ");
+
+            for(int i = 0;i < bytes.length;i++){
+                System.out.print(Integer.parseInt(Integer.toHexString(bytes[i]),16));
+            }
+
         }
 
 

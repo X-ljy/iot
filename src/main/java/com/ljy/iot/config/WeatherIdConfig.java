@@ -14,7 +14,7 @@ public class WeatherIdConfig {
 
     static {
         Properties properties = new Properties();
-        InputStream inputStream = ResponseConfig.class.getClassLoader().getResourceAsStream("weatherstation.properties");
+        InputStream inputStream = WeatherIdConfig.class.getClassLoader().getResourceAsStream("weatherstation.properties");
         try {
             properties.load(inputStream);
             id = new byte[]{
