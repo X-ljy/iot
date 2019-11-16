@@ -1,5 +1,6 @@
 package com.ljy.iot.handler;
 
+import com.ljy.iot.entity.WeatherBean;
 import com.ljy.iot.util.CRC;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -18,6 +19,7 @@ public class WeatherHandler extends SimpleChannelInboundHandler {
 
     private static Logger logger = LoggerFactory.getLogger(WeatherHandler.class);
 
+    private WeatherBean weatherBean;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -45,17 +47,20 @@ public class WeatherHandler extends SimpleChannelInboundHandler {
         if(crc[0] == bytes[bytes.length-2] && crc[1] == bytes[bytes.length-1]){
 
             logger.info("校验成功 ");
-            for(int i = 0;i < bytes.length;i++){
-                System.out.print(Integer.parseInt(Integer.toHexString(bytes[i]),16));
-            }
 
+            weatherBean.setTs();
+
+            for(int i = 6;i < 38 ;i++){
+
+                if(Integer.toHexString(bytes[i]).length() > 3){
+                    System.out.print(Integer.parseInt(Integer.toHexString(bytes[i]).substring(6),16)+" ");
+                }else {
+                    System.out.print(Integer.parseInt(Integer.toHexString(bytes[i]),16)+" ");
+                }
+            }
 
         }else {
             logger.info("校验失败 ");
-
-            for(int i = 0;i < bytes.length;i++){
-                System.out.print(Integer.parseInt(Integer.toHexString(bytes[i]),16));
-            }
 
         }
 
