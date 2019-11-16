@@ -92,6 +92,7 @@ public class WeatherHandler extends SimpleChannelInboundHandler {
             logger.info(weatherBean.toString());
 
             //入库
+            System.out.println(weatherBean.toSqlString());
             TSDButil.doExecuteInsert(weatherBean.toSqlString());
 
         } else {
