@@ -8,22 +8,22 @@ public class WeatherBean {
     
     String ts;
     String id ;
-    float wind_speed ;
-    float rainfall ;
-    float temperature ;
-    float humidity ;
-    float illumination ;
-    float Photosynthesis ;
-    float wind_direction ;
-    float co2 ;
-    float ph ;
-    float soil_temperature_1 ;
-    float soil_moisture_1 ;
-    float soil_temperature_2 ;
-    float soil_moisture_2 ;
-    float soil_temperature_3 ;
-    float soil_moisture_3 ;
-    float conductance ;
+    double wind_speed ;
+    double rainfall ;
+    double temperature ;
+    double humidity ;
+    double illumination ;
+    double Photosynthesis ;
+    double wind_direction ;
+    double co2 ;
+    double ph ;
+    double soil_temperature_1 ;
+    double soil_moisture_1 ;
+    double soil_temperature_2 ;
+    double soil_moisture_2 ;
+    double soil_temperature_3 ;
+    double soil_moisture_3 ;
+    double conductance ;
 
     public String getTs() {
         return ts;
@@ -41,131 +41,155 @@ public class WeatherBean {
         this.id = id;
     }
 
-    public float getWind_speed() {
+    public double getWind_speed() {
         return wind_speed;
     }
 
-    public void setWind_speed(float wind_speed) {
+    public void setWind_speed(double wind_speed) {
         this.wind_speed = wind_speed;
     }
 
-    public float getRainfall() {
+    public double getRainfall() {
         return rainfall;
     }
 
-    public void setRainfall(float rainfall) {
+    public void setRainfall(double rainfall) {
         this.rainfall = rainfall;
     }
 
-    public float getTemperature() {
+    public double getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(float temperature) {
+    public void setTemperature(double temperature) {
         this.temperature = temperature;
     }
 
-    public float getHumidity() {
+    public double getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(float humidity) {
+    public void setHumidity(double humidity) {
         this.humidity = humidity;
     }
 
-    public float getIllumination() {
+    public double getIllumination() {
         return illumination;
     }
 
-    public void setIllumination(float illumination) {
+    public void setIllumination(double illumination) {
         this.illumination = illumination;
     }
 
-    public float getPhotosynthesis() {
+    public double getPhotosynthesis() {
         return Photosynthesis;
     }
 
-    public void setPhotosynthesis(float photosynthesis) {
+    public void setPhotosynthesis(double photosynthesis) {
         Photosynthesis = photosynthesis;
     }
 
-    public float getWind_direction() {
+    public double getWind_direction() {
         return wind_direction;
     }
 
-    public void setWind_direction(float wind_direction) {
+    public void setWind_direction(double wind_direction) {
         this.wind_direction = wind_direction;
     }
 
-    public float getCo2() {
+    public double getCo2() {
         return co2;
     }
 
-    public void setCo2(float co2) {
+    public void setCo2(double co2) {
         this.co2 = co2;
     }
 
-    public float getPh() {
+    public double getPh() {
         return ph;
     }
 
-    public void setPh(float ph) {
+    public void setPh(double ph) {
         this.ph = ph;
     }
 
-    public float getSoil_temperature_1() {
+    public double getSoil_temperature_1() {
         return soil_temperature_1;
     }
 
-    public void setSoil_temperature_1(float soil_temperature_1) {
+    public void setSoil_temperature_1(double soil_temperature_1) {
         this.soil_temperature_1 = soil_temperature_1;
     }
 
-    public float getSoil_moisture_1() {
+    public double getSoil_moisture_1() {
         return soil_moisture_1;
     }
 
-    public void setSoil_moisture_1(float soil_moisture_1) {
+    public void setSoil_moisture_1(double soil_moisture_1) {
         this.soil_moisture_1 = soil_moisture_1;
     }
 
-    public float getSoil_temperature_2() {
+    public double getSoil_temperature_2() {
         return soil_temperature_2;
     }
 
-    public void setSoil_temperature_2(float soil_temperature_2) {
+    public void setSoil_temperature_2(double soil_temperature_2) {
         this.soil_temperature_2 = soil_temperature_2;
     }
 
-    public float getSoil_moisture_2() {
+    public double getSoil_moisture_2() {
         return soil_moisture_2;
     }
 
-    public void setSoil_moisture_2(float soil_moisture_2) {
+    public void setSoil_moisture_2(double soil_moisture_2) {
         this.soil_moisture_2 = soil_moisture_2;
     }
 
-    public float getSoil_temperature_3() {
+    public double getSoil_temperature_3() {
         return soil_temperature_3;
     }
 
-    public void setSoil_temperature_3(float soil_temperature_3) {
+    public void setSoil_temperature_3(double soil_temperature_3) {
         this.soil_temperature_3 = soil_temperature_3;
     }
 
-    public float getSoil_moisture_3() {
+    public double getSoil_moisture_3() {
         return soil_moisture_3;
     }
 
-    public void setSoil_moisture_3(float soil_moisture_3) {
+    public void setSoil_moisture_3(double soil_moisture_3) {
         this.soil_moisture_3 = soil_moisture_3;
     }
 
-    public float getConductance() {
+    public double getConductance() {
         return conductance;
     }
 
-    public void setConductance(float conductance) {
+    public void setConductance(double conductance) {
         this.conductance = conductance;
+    }
+
+    @Override
+    public String toString() {
+        return "WeatherBean{" +
+                "ts='" + ts + '\'' +
+                ", id='" + id + '\'' +
+                ", wind_speed=" + wind_speed +
+                ", rainfall=" + rainfall +
+                ", temperature=" + temperature +
+                ", humidity=" + humidity +
+                ", illumination=" + illumination +
+                ", Photosynthesis=" + Photosynthesis +
+                ", wind_direction=" + wind_direction +
+                ", co2=" + co2 +
+                ", ph=" + ph +
+                ", soil_temperature_1=" + soil_temperature_1 +
+                ", soil_moisture_1=" + soil_moisture_1 +
+                ", soil_temperature_2=" + soil_temperature_2 +
+                ", soil_moisture_2=" + soil_moisture_2 +
+                ", soil_temperature_3=" + soil_temperature_3 +
+                ", soil_moisture_3=" + soil_moisture_3 +
+                ", conductance=" + conductance +
+                '}';
     }
 }
