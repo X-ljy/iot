@@ -26,6 +26,10 @@ public class WeatherHandler extends SimpleChannelInboundHandler {
 
     private WeatherBean weatherBean = new WeatherBean();
 
+    private MyTDengineUtil myTDengineUtil = new MyTDengineUtil(TSDBconfig.jdbcUrl,true);
+
+    public WeatherHandler() throws SQLException {
+    }
 
 
     @Override
@@ -92,8 +96,9 @@ public class WeatherHandler extends SimpleChannelInboundHandler {
             logger.info(weatherBean.toString());
 
             //入库
-            System.out.println(weatherBean.toSqlString());
-            TSDButil.doExecuteInsert(weatherBean.toSqlString());
+//            System.out.println(weatherBean.toSqlString());
+//            TSDButil.doExecuteInsert(weatherBean.toSqlString());
+            myTDengineUtil.insert("iot.t_iot_weather_station",weatherBean);
 
         } else {
             logger.info("校验失败 ");

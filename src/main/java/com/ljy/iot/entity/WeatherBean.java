@@ -25,29 +25,29 @@ public class WeatherBean {
     double soil_moisture_3 ;
     double conductance ;
 
-    public String toSqlString(){
-        return "insert into " + " iot.t_iot_weather_station " + " values " + " ( " +
-                "\'" + getTs() + "\'," +
-                "\'" + getId() + "\'," +
-                "\'" + getWind_speed() + "\'," +
-                "\'" + getRainfall() + "\'," +
-                "\'" + getTemperature() + "\'," +
-                "\'" + getHumidity() + "\'," +
-                "\'" + getIllumination() + "\'," +
-                "\'" + getPhotosynthesis() + "\'," +
-                "\'" + getWind_direction() + "\'," +
-                "\'" + getCo2() + "\'," +
-                "\'" + getPh() + "\'," +
-                "\'" + getSoil_temperature_1() + "\'," +
-                "\'" + getSoil_moisture_1() + "\'," +
-                "\'" + getSoil_temperature_2() + "\'," +
-                "\'" + getSoil_moisture_2() + "\'," +
-                "\'" + getSoil_temperature_3() + "\'," +
-                "\'" + getSoil_moisture_3() + "\'," +
-                "\'" + getConductance() + "\' " +
-                ");";
-
-    }
+//    public String toSqlString(){
+//        return "insert into " + " iot.t_iot_weather_station " + " values " + " ( " +
+//                "\'" + getTs() + "\'," +
+//                "\'" + getId() + "\'," +
+//                "\'" + getWind_speed() + "\'," +
+//                "\'" + getRainfall() + "\'," +
+//                "\'" + getTemperature() + "\'," +
+//                "\'" + getHumidity() + "\'," +
+//                "\'" + getIllumination() + "\'," +
+//                "\'" + getPhotosynthesis() + "\'," +
+//                "\'" + getWind_direction() + "\'," +
+//                "\'" + getCo2() + "\'," +
+//                "\'" + getPh() + "\'," +
+//                "\'" + getSoil_temperature_1() + "\'," +
+//                "\'" + getSoil_moisture_1() + "\'," +
+//                "\'" + getSoil_temperature_2() + "\'," +
+//                "\'" + getSoil_moisture_2() + "\'," +
+//                "\'" + getSoil_temperature_3() + "\'," +
+//                "\'" + getSoil_moisture_3() + "\'," +
+//                "\'" + getConductance() + "\' " +
+//                ");";
+//
+//    }
 
 
 
