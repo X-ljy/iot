@@ -40,35 +40,15 @@ public class WeatherHandler extends SimpleChannelInboundHandler {
         for(int j = 0;j < 70 ;j++){
             bytes1[j] = bytes[j];
         }
-        byte[] bytes2 = CRC.getCRC(bytes1);
+        byte[] crc = CRC.getCRC(bytes1);
 
-        if(bytes2[0] == bytes[bytes.length-2] && bytes2[1] == bytes[bytes.length-1]){
+        if(crc[0] == bytes[bytes.length-2] && crc[1] == bytes[bytes.length-1]){
 
             logger.info("校验成功 ");
+            for(int i = 0;i < bytes.length;i++){
+                System.out.print(Integer.parseInt(Integer.toHexString(bytes[i]),16));
+            }
 
-//            Calendar now = Calendar.getInstance();
-//            int year = now.get(Calendar.YEAR) - 2000;
-//            int month = now.get(Calendar.MONTH) + 1;
-//            int day = now.get(Calendar.DAY_OF_MONTH);
-//            int hour = now.get(Calendar.HOUR_OF_DAY);
-//            int minute = now.get(Calendar.MINUTE);
-//            int second =  now.get(Calendar.SECOND);
-//
-//            byte[] time = new byte[]{(byte) year, (byte) month, (byte) day, (byte) hour, (byte) minute, (byte) second};
-//
-//            byte[] temp = new byte[]{bytes[0],bytes[1],bytes[2],bytes[3],
-//                    (byte)0xa2,(byte)0x06,
-//                    time[0],time[1],time[2],time[3],time[4],time[5]};
-//            byte[] tempEnd = CRC.getCRC(temp);
-//
-//            byte[] responseByte = new byte[]{bytes[0],bytes[1],bytes[2],bytes[3],
-//                    (byte)0xa2,(byte)0x06,
-//                    time[0],time[1],time[2],time[3],time[4],time[5],
-//                    tempEnd[0],tempEnd[1]};
-//            ByteBuf out = Unpooled.buffer(128);
-//            out.writeBytes(responseByte);
-//            ctx.writeAndFlush(out);
-//
 
         }else {
             logger.info("校验失败 ");
