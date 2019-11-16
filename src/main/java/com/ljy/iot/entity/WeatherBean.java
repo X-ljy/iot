@@ -25,6 +25,10 @@ public class WeatherBean {
     double soil_moisture_3 ;
     double conductance ;
 
+    public String toSqlString(){
+        return "";
+    }
+
     public String getTs() {
         return ts;
     }
@@ -192,4 +196,6 @@ public class WeatherBean {
                 ", conductance=" + conductance +
                 '}';
     }
+
+
 }
