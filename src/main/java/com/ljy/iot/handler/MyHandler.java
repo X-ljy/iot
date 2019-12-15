@@ -80,11 +80,11 @@ public class MyHandler extends SimpleChannelInboundHandler {
                 if(byteBuf.hasArray()){
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");//设置日期格式
                     byte[] bytes = byteBuf.array();
-                    File dir = new File("\\image\\5017\\");
+                    File dir = new File(System.getProperty("file.separator") + "image" + System.getProperty("file.separator") + "5017");
                     if(!dir.exists()){
                         dir.mkdir();
                     }
-                    FileOutputStream fout = new FileOutputStream(new File(dir.getPath() + "\\" + df.format(new Date()) + ".jpg"));
+                    FileOutputStream fout = new FileOutputStream(new File(dir.getPath() + System.getProperty("file.separator") + df.format(new Date()) + ".jpg"));
                     //将字节写入文件
                     fout.write(bytes);
                     fout.close();
@@ -95,11 +95,11 @@ public class MyHandler extends SimpleChannelInboundHandler {
                         bytes[i] = byteBuf.getByte(i);
                     }
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");//设置日期格式
-                    File dir = new File("\\image\\5017\\");
+                    File dir = new File(System.getProperty("file.separator") + "image" + System.getProperty("file.separator") + "5017");
                     if(!dir.exists()){
                         dir.mkdir();
                     }
-                    FileOutputStream fout = new FileOutputStream(new File(dir.getPath()  + "\\" + df.format(new Date()) + ".jpg"));
+                    FileOutputStream fout = new FileOutputStream(new File(dir.getPath()  + System.getProperty("file.separator") + df.format(new Date()) + ".jpg"));
                     //将字节写入文件
                     fout.write(bytes);
                     fout.close();
