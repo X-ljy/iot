@@ -42,8 +42,8 @@ public class EchoServer {
                                 throws Exception {
 //                            ch.pipeline().addLast(new MyDecoder(DecopConfig.data_start,DecopConfig.data_end));
 //                            ch.pipeline().addLast(new MyHandler());
-                            ch.pipeline().addLast(new TestDecoder());
-                            ch.pipeline().addLast(new TestHandler());
+                            ch.pipeline().addLast(new MyDecoder(DecopConfig.data_start,DecopConfig.data_end));
+                            ch.pipeline().addLast(new MyHandler());
                         }
                     });
 
